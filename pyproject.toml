@@ -1,0 +1,27 @@
+[project]
+name = "llm-agent-eval-harness"
+version = "0.1.0"
+description = "Offline-first evaluation harness for a small tool-using support agent."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Hari (hKotla)" }]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.2"]
+
+[project.scripts]
+harbor-agent = "support_agent.cli:main"
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["support_agent*", "evals*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"

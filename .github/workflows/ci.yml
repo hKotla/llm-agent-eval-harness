@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: pytest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: python -m pip install -e ".[dev]"
+
+      # No API key. The suite uses the fake LLM and the in-process tools.
+      - name: Pytest
+        run: pytest -v
+
+      # TODO(week-5): score the scenario suite with evals/judge.py and fail
+      # this job when accuracy, helpfulness, or groundedness drops below the
+      # thresholds in evals/thresholds.py. This workflow only checks that the
+      # offline tests still pass.
